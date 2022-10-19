@@ -16,6 +16,8 @@
 
 ## 1. Funktionsumfang
 
+Umwandeln von Text in Markdown-Syntax zu HTML.
+
 ## 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
@@ -30,30 +32,39 @@ Alternativ kann das Modul über [Module Control](https://www.symcon.de/service/d
 
 ### b. Einrichtung in IPS
 
+_Instanz hinzufügen_ anwählen und als Hersteller _(sonstiges)_ sowie als Gerät _Markdown_ auswählen. Dien entstehende Instanz hat keine Eigenschaften.
+
 ## 4. Funktionsreferenz
+
+`string Markdown_Convert2HTML(integer $InstanzID, string $markdown, array $opts)`<br>
+Wandelt den übergebenen Markdown-codierten Text in HTML um.<br>
+Als EInstellungen stehen in _opts_ zur Verfügung:
+
+| Option        | Typ     | Beschreibung |
+| :------------ | :------ | :----------- |
+| Inline        | boolean | |
+| SafeMode      | boolean | |
+| MarkupEscaped | boolean | |
+| BreaksEnabled | boolean | |
+| UrlsLinked    | boolean | |
+
+Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#readme) bzw. im [Tutorial](https://github.com/erusev/parsedown/wiki/Tutorial:-Get-Started).
 
 ## 5. Konfiguration
 
-### Markdown Device
+### Markdown
 
 #### Properties
 
-| Eigenschaft               | Typ      | Standardwert | Beschreibung |
-| :------------------------ | :------  | :----------- | :----------- |
-|                           |          |              | |
+Die Instanz hat keine Eigenschaften.
 
 #### Aktionen
 
-| Bezeichnung                | Beschreibung |
-| :------------------------- | :----------- |
+Die Instanz stellt keine Aktionen zur Verfügung.
 
 ### Variablenprofile
 
-Es werden folgende Variablenprofile angelegt:
-* Boolean<br>
-* Integer<br>
-* Float<br>
-* String<br>
+Die Instanz erstellt keine eigenen Variablenprofile.
 
 ## 6. Anhang
 
@@ -65,8 +76,9 @@ Es werden folgende Variablenprofile angelegt:
 
 ### Quellen
 - [Parsedown - Better Markdown Parser in PHP](https://github.com/erusev/parsedown.git)
+- ein Javascrpt basierter Editor ist der [SimpleMDE](https://github.com/sparksuite/simplemde-markdown-editor)
 
 ## 7. Versions-Historie
 
-- 0.9 @ dd.mm.yyyy HH:MM (beta)
+- 1.0 @ 19.10.2022 16:48
   - Initiale Version

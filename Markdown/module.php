@@ -134,4 +134,48 @@ class Markdown extends IPSModule
             $this->SetValue($ident, $value);
         }
     }
+
+    public function Convert2HTML(string $markdown, array $opts)
+    {
+        $this->SendDebug(__FUNCTION__, 'markdown=' . $markdown, 0);
+        $this->SendDebug(__FUNCTION__, 'opts=' . print_r($opts, true), 0);
+
+        $Parsedown = new Parsedown();
+        if (isset($opts['SafeMode'])) {
+            $Parsedown->setSafeMode((bool) $opts['SafeMode']);
+        }
+        if (isset($opts['MarkupEscaped'])) {
+            $Parsedown->setMarkupEscaped((bool) $opts['MarkupEscaped']);
+        }
+        if (isset($opts['BreaksEnabled'])) {
+            $Parsedown->setBreaksEnabled((bool) $opts['BreaksEnabled']);
+        }
+        if (isset($opts['UrlsLinked'])) {
+            $Parsedown->setUrlsLinked((bool) $opts['UrlsLinked']);
+        }
+
+        if (isset($opts['Inline'])) {
+            $isInline = (bool) $opts['Inline'];
+        } else {
+            $isInline = false;
+        }
+
+        $html = '';
+        if (isset($opts['WithWrapper']) && (bool) $opts['WithWrapper']) {
+            $html .= '<html>' . PHP_EOL;
+        }
+
+        if ($isInline) {
+            $html .= $Parsedown->line($markdown) . PHP_EOL;
+        } else {
+            $html .= $Parsedown->text($markdown) . PHP_EOL;
+        }
+
+        if (isset($opts['WithWrapper']) && (bool) $opts['WithWrapper']) {
+            $html .= '</html>' . PHP_EOL;
+        }
+
+        $this->SendDebug(__FUNCTION__, 'html=' . $html, 0);
+        return $html;
+    }
 }
