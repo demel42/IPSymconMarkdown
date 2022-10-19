@@ -1,0 +1,12 @@
+{
+	"id": "{DDC7D576-84FF-EA16-EDC9-1D27C495B806}",
+	"name": "Markdown",
+	"type": 3,
+	"vendor": "",
+	"aliases": [],
+	"parentRequirements": [],
+	"childRequirements": [],
+	"implemented": [],
+	"prefix": "Markdown",
+	"url": "https://github.com/demel42/IPSymconMarkdown/blob/master/README.md"
+}
