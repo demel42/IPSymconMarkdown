@@ -5,7 +5,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../libs/common.php';
 require_once __DIR__ . '/../libs/local.php';
 
-class MarkdownDevice extends IPSModule
+class Markdown extends IPSModule
 {
     use Markdown\StubsCommonLib;
     use MarkdownLocalLib;
