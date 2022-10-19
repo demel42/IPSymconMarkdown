@@ -64,6 +64,7 @@ Es werden folgende Variablenprofile angelegt:
 - Nachrichten:
 
 ### Quellen
+- [Parsedown - Better Markdown Parser in PHP](https://github.com/erusev/parsedown.git)
 
 ## 7. Versions-Historie
 

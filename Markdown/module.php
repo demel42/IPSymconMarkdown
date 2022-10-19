@@ -5,6 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/../libs/common.php';
 require_once __DIR__ . '/../libs/local.php';
 
+require_once __DIR__ . '/../parsedown/Parsedown.php';
+
 class Markdown extends IPSModule
 {
     use Markdown\StubsCommonLib;

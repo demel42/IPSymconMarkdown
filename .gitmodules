@@ -4,3 +4,6 @@
 [submodule "libs/CommonStubs"]
 	path = libs/CommonStubs
 	url = https://github.com/demel42/CommonStubs.git
+[submodule "parsedown"]
+	path = parsedown
+	url = https://github.com/erusev/parsedown.git
