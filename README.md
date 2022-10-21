@@ -93,16 +93,16 @@ Mit einer String-Variable mit dem Variablenprofil "~HTMLBox" mit einem der folge
 Integriert in die Web-GUI
 
 ```
-<iframe width="100%" height="360" src="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=Markdown-ID>&html_varID=<HTML-ID>"></iframe>
+<iframe width="100%" height="360" src="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=<Markdown-ID>&html_varID=<HTML-ID>"></iframe>
 ```
 
 Aufruf in einem externen Browser-Fenster
 
 ```
-<a href="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=Markdown-ID>&html_varID=<HTML-ID>"/>Editor</a>
+<a href="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=<Markdown-ID>&html_varID=<HTML-ID>"/>Editor</a>
 ```
 
-Anmerkung: die \<Platzhalter\> müssen natörlich mit den entsprehcneden Werten gefüllt werden.
+Anmerkung (aus Erfahrung]: die mit sputzen Klammern gekennzeichneten \<Platzhalter\> müssen natürlich mit den entsprechenden Werten gefüllt werden.
 
 #### Aktionen
 
@@ -126,7 +126,7 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 
 ## 7. Versions-Historie
 
-- 1.1 @ 21.10.2022 15:38
+- 1.1 @ 21.10.2022 17:41
   - Neu: Einbindung eines Markdown-Editors, der Webhook aufgerufen werden kann
 
 - 1.0 @ 19.10.2022 16:48
