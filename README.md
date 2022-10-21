@@ -16,8 +16,9 @@
 
 ## 1. Funktionsumfang
 
-Umwandeln von Text in Markdown-Syntax zu HTML.
+Umwandeln von Text in Markdown-Syntax zu HTML über eine Funktion.<br>
 
+Möglichkeit, über eine Markdorn-Editor solche Texte als WYSIWYG zu erfassen.
 ## 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
@@ -38,17 +39,7 @@ _Instanz hinzufügen_ anwählen und als Hersteller _(sonstiges)_ sowie als Gerä
 
 `string Markdown_Convert2HTML(integer $InstanzID, string $markdown, array $opts)`<br>
 Wandelt den übergebenen Markdown-codierten Text in HTML um.<br>
-Als EInstellungen stehen in _opts_ zur Verfügung:
-
-| Option        | Typ     | Beschreibung |
-| :------------ | :------ | :----------- |
-| Inline        | boolean | |
-| SafeMode      | boolean | |
-| MarkupEscaped | boolean | |
-| BreaksEnabled | boolean | |
-| UrlsLinked    | boolean | |
-
-Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#readme) bzw. im [Tutorial](https://github.com/erusev/parsedown/wiki/Tutorial:-Get-Started).
+Als Einstellungen stehen in _opts_ zur Verfügung, Beschreibung siehe _Properties_ -> _Standardwerte_
 
 ## 5. Konfiguration
 
@@ -56,7 +47,46 @@ Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#re
 
 #### Properties
 
-Die Instanz hat keine Eigenschaften.
+| Eigenschaft               | Typ     | Standardwert   | Beschreibung |
+| :------------------------ | :------ | :------------- | :----------- |
+| Instanz deaktivieren      | boolean | false          | Instanz temporär deaktivieren |
+|                           |         |                | |
+| Zugriff zum Webhook       |         |                | |
+| ... Identifikation        | string  | /hook/Markdown | muss geändert werden, wenn es mehr als eine Instanz gibt |
+| ... Benutzerkennung       | string  |                | optionale Benutzerkennung zur Authentifizierung |
+| ... Passwort              | string  |                | optionales Passwort zur Authentifizierung |
+|                           |         |                | |
+| Einträge                  | array   |                | Defintion zuässiger Variablen |
+| ... Markdown-Variable     | integer | 0              | Variable mit dem Markdown-Code _[1]_ |
+| ... HTML-Variable         | integer | 0              | Variable mit dem erzeugten HTML-Code _[2]_ |
+| ... Titel                 | string  |                | Titel zur Anzeige im Markdown-Editor _[3]_ |
+|                           |         |                | |
+| Standardwerte             |         |                | |
+| ... SafeMode              | boolean | false          | siehe _[4]_ |
+| ... MarkupEscaped         | boolean | false          | siehe _[4]_ |
+| ... BreaksEnabled         | boolean | false          | siehe _[4]_ |
+| ... UrlsLinked            | boolean | true           | siehe _[4]_ |
+| ... Inline                | boolean | false          | siehe _[4]_ |
+|                           |         |                | |
+| ... HtmlWrapper           | boolean | true           | HTML-Code als Wrapper hinzufügen |
+
+_[1]_: Variable vom Typ "String", das den original Markdown-Code enthält
+
+_[2]_: Variable vom Typ "String" mit dem Variablenprofil "~HTMLBox", in diese Variablen werden beim Speichern im Editor der in HTML konvertierte Inhalt geschrieben
+
+_[3]_: optionale @ngane eines Titels des Editors, wird hier nichﬆs angegeben, wird die Bezeichnung der Variable ausgegeben.
+
+_[4]_: Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#readme) bzw. im [Tutorial](https://github.com/erusev/parsedown/wiki/Tutorial:-Get-Started).
+
+##### Markdown-Editor
+
+Um die Erfassung solcher Texte maximal zu unterstützen kann ein Editor aufgerufen werden. Hierzu wird der Webhook mit dem angehängten Kommando _editor_ ausgelöst.
+
+`\<URL-des IPSymcon\>:\<Port\>/hook/Markdown/editor?\<ID der Markdown-Variable\>&\<ID der HTML-Variable\>`
+
+Es wird überprpft, ob die Markdown-Variable in der Instanz konfiguriert ist und ob die HTML-Variable dazu passt.
+Zudem kann der Zugriff auf diesen Webhook per _BasicAuth_ abgesichert werden. SOllte es den Bedarf geben, in einer Installation unterschiedliche Berechtigungen
+zu vergeben, können weitere Instanzen angelegt werden, die getrennt konfiguriert werden.
 
 #### Aktionen
 
@@ -76,9 +106,12 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 
 ### Quellen
 - [Parsedown - Better Markdown Parser in PHP](https://github.com/erusev/parsedown.git)
-- ein Javascrpt basierter Editor ist der [SimpleMDE](https://github.com/sparksuite/simplemde-markdown-editor)
+- der eingebundene Javascript-basierter Editor ist der [SimpleMDE](https://github.com/sparksuite/simplemde-markdown-editor)
 
 ## 7. Versions-Historie
+
+- 1.1 @ 21.10.2022 15:38
+  - Neu: Einbindung eines Markdown-Editors, der Webhook aufgerufen werden kann
 
 - 1.0 @ 19.10.2022 16:48
   - Initiale Version
