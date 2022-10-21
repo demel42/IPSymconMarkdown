@@ -16,9 +16,9 @@
 
 ## 1. Funktionsumfang
 
-Umwandeln von Text in Markdown-Syntax zu HTML über eine Funktion.<br>
+Das Modul stellt eine Funktion zur Verfügung, um Texte mit Markdown in HTML umzuwandeln.
+Zusätzlich gibt es die Möglichkeit, über einen externen WYSIWYG-Editor solche Texte zu erfassen.
 
-Möglichkeit, über eine Markdorn-Editor solche Texte als WYSIWYG zu erfassen.
 ## 2. Voraussetzungen
 
 - IP-Symcon ab Version 6.0
