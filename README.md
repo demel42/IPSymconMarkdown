@@ -74,7 +74,7 @@ _[1]_: Variable vom Typ "String", das den original Markdown-Code enthält
 
 _[2]_: Variable vom Typ "String" mit dem Variablenprofil "~HTMLBox", in diese Variablen werden beim Speichern im Editor der in HTML konvertierte Inhalt geschrieben
 
-_[3]_: optionale @ngane eines Titels des Editors, wird hier nichﬆs angegeben, wird die Bezeichnung der Variable ausgegeben.
+_[3]_: optionale @ngane eines Titels des Editors, wird hier nichts angegeben, wird die Bezeichnung der Variable ausgegeben.
 
 _[4]_: Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#readme) bzw. im [Tutorial](https://github.com/erusev/parsedown/wiki/Tutorial:-Get-Started).
 
@@ -82,11 +82,27 @@ _[4]_: Erklärung der Optionen siehe in [Github](https://github.com/erusev/parse
 
 Um die Erfassung solcher Texte maximal zu unterstützen kann ein Editor aufgerufen werden. Hierzu wird der Webhook mit dem angehängten Kommando _editor_ ausgelöst.
 
-`\<URL-des IPSymcon\>:\<Port\>/hook/Markdown/editor?\<ID der Markdown-Variable\>&\<ID der HTML-Variable\>`
+`<IPSymcon-URL>:<Port>/hook/Markdown/editor?<ID der Markdown-Variable>&<ID der HTML-Variable>`
 
 Es wird überprpft, ob die Markdown-Variable in der Instanz konfiguriert ist und ob die HTML-Variable dazu passt.
-Zudem kann der Zugriff auf diesen Webhook per _BasicAuth_ abgesichert werden. SOllte es den Bedarf geben, in einer Installation unterschiedliche Berechtigungen
+Zudem kann der Zugriff auf diesen Webhook per _BasicAuth_ abgesichert werden. Sollte es den Bedarf geben, in einer Installation unterschiedliche Berechtigungen
 zu vergeben, können weitere Instanzen angelegt werden, die getrennt konfiguriert werden.
+
+Mit einer String-Variable mit dem Variablenprofil "~HTMLBox" mit einem der folgenden Inhalte kann der Editor für eine bestimmte Variable aufgerufen werden:
+
+Integriert in die Web-GUI
+
+```
+<iframe width="100%" height="360" src="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=Markdown-ID>&html_varID=<HTML-ID>"></iframe>
+```
+
+Aufruf in einem externen Browser-Fenster
+
+```
+<a href="<IPSymcon-URL>:<Port>/hook/Markdown/editor?markdown_varID=Markdown-ID>&html_varID=<HTML-ID>"/>Editor</a>
+```
+
+Anmerkung: die \<Platzhalter\> müssen natörlich mit den entsprehcneden Werten gefüllt werden.
 
 #### Aktionen
 
