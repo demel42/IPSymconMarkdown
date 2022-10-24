@@ -5,8 +5,8 @@
 
 			"__function__": "CheckConfiguration",
 			"Webhook is already used": "Webhook wird bereits verwendet",
-			"Markup variable of item {$idx} must be type string": "Markup-Variable des Eintrags {$idx} muss vom Typ String sein",
-			"Markup variable of item {$idx} isn't specified": "Markup-Variable des Eintrags {$idx} ist nicht spezifiziert",
+			"Markdown variable of item {$idx} must be type string": "Markdown-Variable des Eintrags {$idx} muss vom Typ String sein",
+			"Markdown variable of item {$idx} isn't specified": "Markdown-Variable des Eintrags {$idx} ist nicht spezifiziert",
 			"HTML variable of item {$idx} must have variable profile \"~HTMLBox\"": "HTML-Variable des Eintrags {$idx} muss das Variablenprofil \"~HTMLBox\" haben",
 
 			"__properties__": "",
@@ -16,17 +16,25 @@
 			"Name": "Bezeichnung",
 			"User": "Benutzerkennung",
 			"Password": "Kennwort",
-			"Markup variable": "Markup-Variable",
+			"Markdown variable": "Markdown-Variable",
 			"HTML variable": "HTML-Variable",
 			"Title": "Titel",
 			"Editable items": "Bearbeitbare Elemente",
+
+			"Defaults for the converter options": "Standardwerte für die Optionen des Konverters",
 			"Parser option \"SafeMode\"": "Parser-Option \"SafeMode\"",
 			"Parser option \"MarkupEscaped\"": "Parser-Option \"MarkupEscaped\"",
 			"Parser option \"BreaksEnabled\"": "Parser-Option \"BreaksEnabled\"",
 			"Parser option \"UrlsLinked\"": "Parser-Option \"UrlsLinked\"",
 			"Parser option \"Inline\"": "Parser-Option \"Inline\"",
 			"Add HTML code as wrapper": "HTML-Code als Wrapper hinzufügen",
-			"Defaults for the converter options": "Standardwerte für die Optionen des Konverters",
+
+			"Editor configuration": "Editor-Konfiguration",
+			"Editor option \"spellChecker\"": "Editor-Option \"spellChecker\"",
+			"Editor option \"codeSyntaxHighlighting\"": "Editor-Option \"codeSyntaxHighlighting\"",
+
+			"__actions__": "",
+			"Open editor": "Editor öffnen",
 
 			"__end__": ""
 		}

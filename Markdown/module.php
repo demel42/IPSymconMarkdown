@@ -27,6 +27,9 @@ class Markdown extends IPSModule
 
         $this->RegisterPropertyBoolean('module_disable', false);
 
+        $this->RegisterPropertyString('ipsIP', '');
+        $this->RegisterPropertyInteger('ipsPort', 3777);
+
         $this->RegisterPropertyString('hook', '/hook/' . __CLASS__);
         $this->RegisterPropertyString('hook_user', '');
         $this->RegisterPropertyString('hook_password', '');
@@ -39,6 +42,9 @@ class Markdown extends IPSModule
         $this->RegisterPropertyBoolean('opt_UrlsLinked', true);
         $this->RegisterPropertyBoolean('opt_Inline', false);
         $this->RegisterPropertyBoolean('opt_HtmlWrapper', true);
+
+        $this->RegisterPropertyBoolean('opt_spellChecker', false);
+        $this->RegisterPropertyBoolean('opt_codeSyntaxHighlighting', false);
 
         $this->RegisterAttributeString('UpdateInfo', '');
 
@@ -67,11 +73,11 @@ class Markdown extends IPSModule
                 $varType = $var['VariableType'];
                 if ($varType != VARIABLETYPE_STRING) {
                     $this->SendDebug(__FUNCTION__, '"markdown_varID" of item ' . $idx . ' must be type string', 0);
-                    $r[] = $this->TranslateFormat('Markup variable of item {$idx} must be type string', ['{$idx}' => $idx]);
+                    $r[] = $this->TranslateFormat('Markdown variable of item {$idx} must be type string', ['{$idx}' => $idx]);
                 }
             } else {
                 $this->SendDebug(__FUNCTION__, '"markdown_varID" of item ' . $idx . ' is missing', 0);
-                $r[] = $this->TranslateFormat('Markup variable of item {$idx} isn\'t specified', ['{$idx}' => $idx]);
+                $r[] = $this->TranslateFormat('Markdown variable of item {$idx} isn\'t specified', ['{$idx}' => $idx]);
             }
 
             $html_varID = $item['html_varID'];
@@ -201,7 +207,7 @@ class Markdown extends IPSModule
                         'type'               => 'SelectVariable',
                         'validVariableTypes' => [VARIABLETYPE_STRING],
                     ],
-                    'caption'            => 'Markup variable',
+                    'caption'            => 'Markdown variable',
                     'width'              => '500px',
                 ],
                 [
@@ -264,6 +270,23 @@ class Markdown extends IPSModule
             'caption' => 'Defaults for the converter options',
         ];
 
+        $formElements[] = [
+            'type'    => 'ExpansionPanel',
+            'items'   => [
+                [
+                    'type'    => 'CheckBox',
+                    'name'    => 'opt_spellChecker',
+                    'caption' => 'Editor option "spellChecker"'
+                ],
+                [
+                    'type'    => 'CheckBox',
+                    'name'    => 'opt_codeSyntaxHighlighting',
+                    'caption' => 'Editor option "codeSyntaxHighlighting"'
+                ],
+            ],
+            'caption' => 'Editor configuration',
+        ];
+
         return $formElements;
     }
 
@@ -278,6 +301,63 @@ class Markdown extends IPSModule
             $formActions[] = $this->GetReferencesFormAction();
 
             return $formActions;
+        }
+
+        $expert_items = [];
+
+        $hook = $this->ReadPropertyString('hook');
+        if ($hook != '') {
+            $ipsIP = $this->ReadPropertyString('ipsIP');
+            $ipsPort = $this->ReadPropertyInteger('ipsPort');
+            $url = $this->GetConnectUrl();
+            if ($url == false) {
+                $url = 'http://' . ($ipsIP != '' ? $ipsIP : gethostbyname(gethostname())) . ':' . $ipsPort . '/';
+            }
+            $url .= $hook . '/editor';
+
+            $markdown_options = [];
+            $items = json_decode($this->ReadPropertyString('items'), true);
+            foreach ($items as $item) {
+                $markdown_varID = $item['markdown_varID'];
+                $v = '?markdown_varID=' . $markdown_varID;
+                $html_varID = $item['html_varID'];
+                if ($html_varID) {
+                    $v .= '&html_varID=' . $html_varID;
+                }
+
+                $c = IPS_GetLocation($markdown_varID);
+
+                $markdown_options[] = [
+                    'value'   => $v,
+                    'caption' => $c,
+                ];
+            }
+
+            $expert_items[] = [
+                'type'    => 'RowLayout',
+                'items'   => [
+                    [
+                        'type'    => 'Select',
+                        'options' => $markdown_options,
+                        'name'    => 'ent',
+                        'caption' => 'Markdown variable'
+                    ],
+                    [
+                        'type'    => 'Button',
+                        'caption' => 'Open editor',
+                        'onClick' => 'echo  "' . $url . '$ent";',
+                    ],
+                ],
+            ];
+        }
+
+        if ($expert_items != []) {
+            $formActions[] = [
+                'type'      => 'ExpansionPanel',
+                'caption'   => 'Expert area',
+                'expanded'  => false,
+                'items'     => $expert_items,
+            ];
         }
 
         $formActions[] = $this->GetInformationFormAction();
@@ -308,7 +388,7 @@ class Markdown extends IPSModule
             }
 
             if (($_SERVER['PHP_AUTH_USER'] != $hook_user) || ($_SERVER['PHP_AUTH_PW'] != $hook_password)) {
-                header('WWW-Authenticate: Basic Realm="Markup WebHook"');
+                header('WWW-Authenticate: Basic Realm="Markdown WebHook"');
                 header('HTTP/1.0 401 Unauthorized');
                 echo 'Authorization required';
                 return;
@@ -354,7 +434,7 @@ class Markdown extends IPSModule
                 if (IPS_VariableExists($markdown_varID) == false) {
                     $this->SendDebug(__FUNCTION__, '.... unknown/invalid markdown_varID "' . $markdown_varID . '"', 0);
                     http_response_code(404);
-                    die('Unknown/invalid Markup variable!');
+                    die('Unknown/invalid markdown variable!');
                 }
                 for ($i = 0; $i < count($items); $i++) {
                     $item = $items[$i];
@@ -365,7 +445,7 @@ class Markdown extends IPSModule
                 if ($i == count($items)) {
                     $this->SendDebug(__FUNCTION__, '.... markdown_varID ' . $markdown_varID . ' not found in list', 0);
                     http_response_code(404);
-                    die('Markup variable is not permitted!');
+                    die('Markdown variable is not permitted!');
                 }
                 if ($this->IsValidID($html_varID)) {
                     if (IPS_VariableExists($html_varID) == false) {
@@ -384,7 +464,7 @@ class Markdown extends IPSModule
                 if ($title == '') {
                     $title = 'Variable ' . $markdown_varID . '(' . IPS_GetName($markdown_varID) . ')';
                 }
-                $header = 'Markup-Editor - ' . $title;
+                $header = 'Markdown-Editor - ' . $title;
 
                 $ret = $this->GetEditorPage($header, $markdown_varID, $html_varID);
                 break;
@@ -397,7 +477,7 @@ class Markdown extends IPSModule
                 if (IPS_VariableExists($markdown_varID) == false) {
                     $this->SendDebug(__FUNCTION__, '.... unknown/invalid markdown_varID "' . $markdown_varID . '"', 0);
                     http_response_code(404);
-                    die('Unknown/invalid Markup variable!');
+                    die('Unknown/invalid markdown variable!');
                 }
                 for ($i = 0; $i < count($items); $i++) {
                     $item = $items[$i];
@@ -408,7 +488,7 @@ class Markdown extends IPSModule
                 if ($i == count($items)) {
                     $this->SendDebug(__FUNCTION__, '.... markdown_varID ' . $markdown_varID . ' not found in list', 0);
                     http_response_code(404);
-                    die('Markup variable is not permitted!');
+                    die('Markdown variable is not permitted!');
                 }
 
                 $var = IPS_GetVariable($markdown_varID);
@@ -432,7 +512,7 @@ class Markdown extends IPSModule
                 if (IPS_VariableExists($markdown_varID) == false) {
                     $this->SendDebug(__FUNCTION__, '.... unknown/invalid markdown_varID "' . $markdown_varID . '"', 0);
                     http_response_code(404);
-                    die('Unknown/invalid Markup variable!');
+                    die('Unknown/invalid markdown variable!');
                 }
                 for ($i = 0; $i < count($items); $i++) {
                     $item = $items[$i];
@@ -443,7 +523,7 @@ class Markdown extends IPSModule
                 if ($i == count($items)) {
                     $this->SendDebug(__FUNCTION__, '.... markdown_varID ' . $markdown_varID . ' not found in list', 0);
                     http_response_code(404);
-                    die('Markup variable is not permitted!');
+                    die('Markdown variable is not permitted!');
                 }
                 if ($this->IsValidID($html_varID)) {
                     if (IPS_VariableExists($html_varID) == false) {
@@ -574,6 +654,9 @@ class Markdown extends IPSModule
     {
         $html = '';
 
+        $opt_codeSyntaxHighlighting = $this->ReadPropertyBoolean('opt_codeSyntaxHighlighting');
+        $opt_spellChecker = $this->ReadPropertyBoolean('opt_spellChecker');
+
         $html .= '<!DOCTYPE html>' . PHP_EOL;
         $html .= '<html>' . PHP_EOL;
         $html .= '    <head>' . PHP_EOL;
@@ -624,7 +707,10 @@ class Markdown extends IPSModule
         $html .= '        <script>' . PHP_EOL;
         $html .= '            var simplemde = new SimpleMDE({' . PHP_EOL;
         $html .= '                    element: document.getElementById("text"),' . PHP_EOL;
-        $html .= '                    spellChecker: false,' . PHP_EOL;
+        $html .= '                    spellChecker: ' . $this->bool2str($opt_spellChecker) . ',' . PHP_EOL;
+        $html .= '                    renderingConfig: { ' . PHP_EOL;
+        $html .= '                        codeSyntaxHighlighting: ' . $this->bool2str($opt_codeSyntaxHighlighting) . ',' . PHP_EOL;
+        $html .= '                    },' . PHP_EOL;
         $html .= '                });' . PHP_EOL;
 
         $html .= '            function load() {' . PHP_EOL;

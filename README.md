@@ -47,28 +47,32 @@ Als Einstellungen stehen in _opts_ zur Verfügung, Beschreibung siehe _Propertie
 
 #### Properties
 
-| Eigenschaft               | Typ     | Standardwert   | Beschreibung |
-| :------------------------ | :------ | :------------- | :----------- |
-| Instanz deaktivieren      | boolean | false          | Instanz temporär deaktivieren |
-|                           |         |                | |
-| Zugriff zum Webhook       |         |                | |
-| ... Identifikation        | string  | /hook/Markdown | muss geändert werden, wenn es mehr als eine Instanz gibt |
-| ... Benutzerkennung       | string  |                | optionale Benutzerkennung zur Authentifizierung |
-| ... Passwort              | string  |                | optionales Passwort zur Authentifizierung |
-|                           |         |                | |
-| Einträge                  | array   |                | Defintion zuässiger Variablen |
-| ... Markdown-Variable     | integer | 0              | Variable mit dem Markdown-Code _[1]_ |
-| ... HTML-Variable         | integer | 0              | Variable mit dem erzeugten HTML-Code _[2]_ |
-| ... Titel                 | string  |                | Titel zur Anzeige im Markdown-Editor _[3]_ |
-|                           |         |                | |
-| Standardwerte             |         |                | |
-| ... SafeMode              | boolean | false          | siehe _[4]_ |
-| ... MarkupEscaped         | boolean | false          | siehe _[4]_ |
-| ... BreaksEnabled         | boolean | false          | siehe _[4]_ |
-| ... UrlsLinked            | boolean | true           | siehe _[4]_ |
-| ... Inline                | boolean | false          | siehe _[4]_ |
-|                           |         |                | |
-| ... HtmlWrapper           | boolean | true           | HTML-Code als Wrapper hinzufügen |
+| Eigenschaft                | Typ     | Standardwert   | Beschreibung |
+| :------------------------- | :------ | :------------- | :----------- |
+| Instanz deaktivieren       | boolean | false          | Instanz temporär deaktivieren |
+|                            |         |                | |
+| Zugriff zum Webhook        |         |                | |
+| ... Identifikation         | string  | /hook/Markdown | muss geändert werden, wenn es mehr als eine Instanz gibt |
+| ... Benutzerkennung        | string  |                | optionale Benutzerkennung zur Authentifizierung |
+| ... Passwort               | string  |                | optionales Passwort zur Authentifizierung |
+|                            |         |                | |
+| Einträge                   | array   |                | Defintion zuässiger Variablen |
+| ... Markdown-Variable      | integer | 0              | Variable mit dem Markdown-Code _[1]_ |
+| ... HTML-Variable          | integer | 0              | Variable mit dem erzeugten HTML-Code _[2]_ |
+| ... Titel                  | string  |                | Titel zur Anzeige im Markdown-Editor _[3]_ |
+|                            |         |                | |
+| Parser-Standardwerte       |         |                | |
+| ... SafeMode               | boolean | false          | siehe _[4]_ |
+| ... MarkupEscaped          | boolean | false          | siehe _[4]_ |
+| ... BreaksEnabled          | boolean | false          | siehe _[4]_ |
+| ... UrlsLinked             | boolean | true           | siehe _[4]_ |
+| ... Inline                 | boolean | false          | siehe _[4]_ |
+|                            |         |                | |
+| ... HtmlWrapper            | boolean | true           | HTML-Code als Wrapper hinzufügen |
+|                            |         |                | |
+| Editor-Konfiguration       |         |                | |
+| ... spellChecker           | boolean | false          | siehe _[5]_ |
+| ... codeSyntaxHighlighting | boolean | false          | siehe _[5]_ |
 
 _[1]_: Variable vom Typ "String", das den original Markdown-Code enthält
 
@@ -77,6 +81,8 @@ _[2]_: Variable vom Typ "String" mit dem Variablenprofil "~HTMLBox", in diese Va
 _[3]_: optionale @ngane eines Titels des Editors, wird hier nichts angegeben, wird die Bezeichnung der Variable ausgegeben.
 
 _[4]_: Erklärung der Optionen siehe in [Github](https://github.com/erusev/parsedown#readme) bzw. im [Tutorial](https://github.com/erusev/parsedown/wiki/Tutorial:-Get-Started).
+
+_[5]_: Erklärung der Konfiguration siehe in [Github](https://github.com/sparksuite/simplemde-markdown-editor).
 
 ##### Markdown-Editor
 
@@ -106,7 +112,9 @@ Anmerkung (aus Erfahrung]: die mit sputzen Klammern gekennzeichneten \<Platzhalt
 
 #### Aktionen
 
-Die Instanz stellt keine Aktionen zur Verfügung.
+| Bezeichnung                | Beschreibung |
+| :------------------------- | :----------- |
+| Editor öffnen              | Editor für die ausgewählte Variable öffnen, dabei wird vorzugsweise die _ipmagic-URL_ verwendet |
 
 ### Variablenprofile
 
@@ -125,6 +133,10 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 - der eingebundene Javascript-basierter Editor ist der [SimpleMDE](https://github.com/sparksuite/simplemde-markdown-editor)
 
 ## 7. Versions-Historie
+
+- 1.2 @ 24.10.2022 10:20
+  - Neu: Markdown-Editor kann direkt von der Instanz-Konfiguration ausgerufen werden
+  - Neu: Konfiguration des Markdown-Editors
 
 - 1.1 @ 21.10.2022 17:41
   - Neu: Einbindung eines Markdown-Editors, der Webhook aufgerufen werden kann
