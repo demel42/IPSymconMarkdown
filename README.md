@@ -134,6 +134,11 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 
 ## 7. Versions-Historie
 
+- 1.3 @ 04.07.2023 14:44
+  - update submodule CommonStubs
+    - Absicherung bei Zugriff auf Objekte und Inhalte
+    - Vorbereitung auf IPS 7 / PHP 8.2
+
 - 1.2 @ 24.10.2022 10:20
   - Neu: Markdown-Editor kann direkt von der Instanz-Konfiguration ausgerufen werden
   - Neu: Konfiguration des Markdown-Editors
