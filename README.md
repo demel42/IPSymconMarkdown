@@ -134,6 +134,10 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 
 ## 7. Versions-Historie
 
+- 1.4 @ 19.09.2023 16:54
+  - Neu: Ermittlung von Speicherbedarf und Laufzeit (aktuell und für 31 Tage) und Anzeige im Panel "Information"
+  - update submodule CommonStubs
+
 - 1.3 @ 04.07.2023 14:44
   - Vorbereitung auf IPS 7 / PHP 8.2
   - update submodule CommonStubs
