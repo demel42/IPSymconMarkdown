@@ -135,7 +135,7 @@ Die Instanz erstellt keine eigenen Variablenprofile.
 ## 7. Versions-Historie
 
 - 1.6 @ 21.02.2024 11:10
-  - Absicherung auf fehlende Variablen
+  - Fix: Absicherung des Zugriffs auf fehlende Variablen
   - update submodule CommonStubs
 
 - 1.5 @ 06.02.2024 09:46
