@@ -323,6 +323,10 @@ class Markdown extends IPSModule
             $items = json_decode($this->ReadPropertyString('items'), true);
             foreach ($items as $item) {
                 $markdown_varID = $item['markdown_varID'];
+                if (IPS_VariableExists($markdown_varID) == false) {
+                    $this->SendDebug(__FUNCTION__, '.... unknown/invalid markdown_varID "' . $markdown_varID . '"', 0);
+                    continue;
+                }
                 $v = '?markdown_varID=' . $markdown_varID;
                 $html_varID = $item['html_varID'];
                 if ($html_varID) {
